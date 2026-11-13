@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google нэвтрэлт · Цаг агаар</title>
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
+  <script src="weather.js" defer></script>
+  <script src="db.js" defer></script>
+  <script src="auth.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>🌤️ Цаг агаар</h1>
+    <p class="subtitle">Дэлхийн аль ч хотыг хайж, одоогийн болон ойрын 24 цагийн цаг агаарыг харна уу.</p>
+
+    <section class="card auth-card" aria-label="Google нэвтрэлт">
+      <div id="loginPanel">
+        <h2>Google-ээр нэвтрэх</h2>
+        <p>Нэвтэрч өөрийн мэдээлэл болон цаг агаарын мэдээг харна уу.</p>
+        <div id="googleButton"></div>
+      </div>
+      <div id="profilePanel" class="profile" hidden>
+        <img id="profilePicture" class="avatar" alt="Хэрэглэгчийн зураг" referrerpolicy="no-referrer" hidden>
+        <span id="profileFallback" class="avatar avatar-fallback" aria-hidden="true"></span>
+        <div class="profile-info">
+          <h2 id="profileName"></h2>
+          <p id="profileEmail"></p>
+          <p class="profile-id">Google ID: <span id="profileId"></span></p>
+          <p id="dbStatus" class="profile-id" role="status" aria-live="polite"></p>
+        </div>
+        <button id="signOutButton" type="button">Гарах</button>
+      </div>
+      <p id="authStatus" class="status" role="status" aria-live="polite">Google нэвтрэлтийг ачаалж байна...</p>
+    </section>
+
+    <main id="weatherPanel" hidden>
+      <div class="search">
+        <input id="searchInput" type="text" autocomplete="off" aria-label="Хотын нэр"
+               placeholder="Хотын нэр бичнэ үү... (жишээ: Ulaanbaatar, Дархан, Tokyo, Paris)">
+        <ul id="suggestions" class="suggestions"></ul>
+      </div>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <section id="result" class="card hidden">
+        <h2 id="placeName" class="place"></h2>
+        <p id="placeMeta" class="place-meta"></p>
+
+        <div class="now">
+          <div id="nowIcon" class="icon"></div>
+          <div id="nowTemp" class="temp"></div>
+          <div>
+            <div id="nowDesc" class="desc"></div>
+            <div id="nowMinMax" class="minmax"></div>
+          </div>
+        </div>
+
+        <div id="details" class="details"></div>
+
+        <h3>Ойрын 24 цагийн мэдээ (3 цаг тутам)</h3>
+        <div id="hourly" class="hourly"></div>
+      </section>
+
+    </main>
+
+    <noscript><p class="status error">Энэ хуудсыг ашиглахын тулд JavaScript-ээ идэвхжүүлнэ үү.</p></noscript>
+
+    <footer>
+      Өгөгдөл: <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap API</a>
+    </footer>
+  </div>
+
+</body>
+</html>
