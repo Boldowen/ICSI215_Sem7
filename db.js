@@ -13,6 +13,7 @@ const DB_ERRORS = {
   email_address_invalid: "Имэйл хаяг буруу байна.",
   over_email_send_rate_limit: "Хэт олон захидал илгээсэн байна. Түр хүлээгээд дахин оролдоно уу.",
   over_request_rate_limit: "Хэт олон оролдлого хийлээ. Түр хүлээгээд дахин оролдоно уу.",
+  email_provider_disabled: "Имэйлээр нэвтрэх боломж Supabase дээр унтраалттай байна (Authentication → Providers → Email).",
   signup_disabled: "Шинэ хэрэглэгч бүртгэх боломж хаалттай байна."
 };
 
