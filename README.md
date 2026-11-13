@@ -1,18 +1,33 @@
-# Google нэвтрэлт · Цаг агаар · Supabase
+# Нэвтрэлт · Цаг агаар · Supabase
 
 Онлайн хувилбар: <https://boldowen.github.io/ICSI215_Sem7/>
 
-Google-ээр нэвтэрсэн хэрэглэгчийг Supabase (PostgreSQL) өгөгдлийн сангийн `users` хүснэгтэд хадгалж, цаг агаарын мэдээг харуулна.
+Даалгавар (Data Base Integration):
+
+1. **Хэрэглэгчийн өгөгдлийн сан, login page** — Supabase (PostgreSQL). Хэрэглэгч овог, нэр, имэйл, нууц үгээр бүртгүүлж, имэйл + нууц үгээр нэвтэрнэ.
+2. **Google нэвтрэлт + цаг агаар** — өмнөх даалгаврын хоёр хэсэг ижил хуудсанд нэгтгэгдсэн.
+3. **Ижил UI** — аль ч аргаар нэвтэрсэн ижил профайл, цаг агаарын хэсэг нээгдэж, ижил «Гарах» товчоор гарна.
+4. **GitHub** — энэ repo, GitHub Pages дээр байршсан.
+
+## Өгөгдлийн сангийн бүтэц
+
+| Хүснэгт | Агуулга |
+|---|---|
+| `auth.users` (Supabase Auth) | имэйл, **нууц үгийн bcrypt hash** (`encrypted_password`) |
+| `public.users` | `last_name` (овог), `first_name` (нэр), `email`, `provider`, `google_sub`, `picture`, `created_at`, `last_login_at`, `login_count` |
+
+Нууц үгийг ил хэлбэрээр хаана ч хадгалахгүй; шалгалтыг Supabase Auth сервер талд хийнэ. `public.users`-д RLS асаалттай тул хэрэглэгч зөвхөн өөрийн мөрийг уншина, мөрийг зөвхөн `record_login()` функц бичнэ.
 
 ## Өгөгдлийн сан (Supabase) тохируулах
 
 1. <https://supabase.com> дээр project үүсгэнэ.
-2. **SQL Editor** дээр `supabase/schema.sql` файлын агуулгыг ажиллуулна (`users` хүснэгт, RLS, `record_login()` функц үүснэ).
-3. **Authentication → Sign In / Providers → Google**-ийг идэвхжүүлж, **Client IDs** талбарт `config.js` дэх `googleClientId`-г бичнэ (Client secret шаардлагагүй).
-4. **Project Settings → API**-аас Project URL болон `anon` (publishable) key-г `config.js`-ийн `supabaseUrl`, `supabaseAnonKey`-д бичнэ.
-5. Google Cloud Console → OAuth client → **Authorized JavaScript origins**-д `https://boldowen.github.io` болон `http://localhost:5500`-г нэмнэ.
+2. `supabase/schema.sql`-ийг SQL Editor эсвэл psql (`\i supabase/schema.sql`) дээр ажиллуулна.
+3. **Authentication → Sign In / Providers → Email** → **Confirm email**-ийг унтраана (эс бөгөөс бүртгүүлсний дараа имэйлээр баталгаажуулах шаардлагатай).
+4. **Authentication → Sign In / Providers → Google**-ийг идэвхжүүлж, **Client IDs** талбарт `config.js` дэх `googleClientId`-г бичнэ.
+5. **Project Settings → API Keys**-ээс Project URL болон publishable (anon) key-г `config.js`-д бичнэ.
+6. Google Cloud Console → OAuth client → **Authorized JavaScript origins**-д `https://boldowen.github.io` болон `http://localhost:5500`-г нэмнэ.
 
-Нэвтрэх үед: Google ID token → `supabase.auth.signInWithIdToken()` (Supabase token-ийн гарын үсэг, audience, nonce-ийг сервер талд шалгана) → `record_login()` функц `users` хүснэгтэд мөр үүсгэх эсвэл `last_login_at`, `login_count`-ийг шинэчилнэ. RLS-ийн улмаас хэрэглэгч зөвхөн өөрийн мөрийг уншина. Хадгалагдсан хэрэглэгчдийг Supabase → **Table Editor → users** дээрээс харна.
+Хадгалагдсан хэрэглэгчдийг шалгах: Supabase → **Table Editor → users**, эсвэл psql дээр `select last_name, first_name, email, provider, login_count from public.users;`.
 
 ## Ажиллуулах
 
@@ -28,7 +43,7 @@ python3 -m http.server 5500 --bind localhost
 - `index.html` — нэвтрэх, хэрэглэгч, цаг агаарын хэсгүүд.
 - `styles.css` — өмнөх цаг агаарын хуудасны загвар, нэвтрэх хэсгийн ижил загвар.
 - `config.js` — Google Client ID, OpenWeatherMap API түлхүүр, Supabase URL болон anon key.
-- `db.js` — Supabase холболт, нэвтэрсэн хэрэглэгчийг `users` хүснэгтэд хадгалах.
+- `db.js` — Supabase холболт: бүртгүүлэх, имэйл/нууц үгээр нэвтрэх, хэрэглэгчийг `users` хүснэгтэд хадгалах.
 - `supabase/schema.sql` — хүснэгт, RLS policy, `record_login()` функц.
 - `auth.js` — Google Identity Services товч, JWT payload унших, хэрэглэгч харуулах, гарах үйлдэл.
 - `weather.js` — өмнөх хот хайх, одоогийн болон ойрын 24 цагийн мэдээний код.

@@ -225,3 +225,21 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .profile-info { flex-basis: calc(100% - 88px); }
   .profile button { margin-left: 88px; }
 }
+
+/* Нэвтрэх / бүртгүүлэх маягт */
+.tabs { display: flex; gap: 4px; margin-bottom: 20px; padding: 4px; background: var(--hover); border-radius: 12px; }
+.tabs button { flex: 1; border-color: transparent; background: transparent; color: var(--muted); font-weight: 600; }
+.tabs button[aria-selected="true"] { background: var(--card); border-color: var(--border); color: var(--text); }
+.auth-form { display: grid; gap: 14px; }
+.auth-form label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; }
+.auth-form .hint { color: var(--muted); font-weight: 400; }
+.auth-form input { width: 100%; padding: 12px 14px; font: inherit; font-weight: 400; border: 1px solid var(--border); border-radius: 10px; background: var(--card); color: var(--text); outline: none; }
+.auth-form input:focus { border-color: var(--accent); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+button.primary:hover { background: var(--accent); filter: brightness(1.08); }
+button:disabled { opacity: 0.6; cursor: progress; }
+.divider { display: flex; align-items: center; gap: 12px; margin: 20px 0 16px; color: var(--muted); font-size: 14px; }
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+#googleButton { display: flex; justify-content: center; }
+@media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }

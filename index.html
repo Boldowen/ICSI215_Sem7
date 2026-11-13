@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google нэвтрэлт · Цаг агаар</title>
+  <title>Нэвтрэлт · Цаг агаар</title>
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="stylesheet" href="styles.css">
   <script src="config.js" defer></script>
@@ -17,10 +17,42 @@
     <h1>🌤️ Цаг агаар</h1>
     <p class="subtitle">Дэлхийн аль ч хотыг хайж, одоогийн болон ойрын 24 цагийн цаг агаарыг харна уу.</p>
 
-    <section class="card auth-card" aria-label="Google нэвтрэлт">
+    <section class="card auth-card" aria-label="Нэвтрэлт">
       <div id="loginPanel">
-        <h2>Google-ээр нэвтрэх</h2>
-        <p>Нэвтэрч өөрийн мэдээлэл болон цаг агаарын мэдээг харна уу.</p>
+        <div class="tabs" role="tablist" aria-label="Нэвтрэх эсвэл бүртгүүлэх">
+          <button id="tabLogin" type="button" role="tab" aria-selected="true" aria-controls="loginForm">Нэвтрэх</button>
+          <button id="tabRegister" type="button" role="tab" aria-selected="false" aria-controls="registerForm">Бүртгүүлэх</button>
+        </div>
+
+        <form id="loginForm" class="auth-form" role="tabpanel" aria-labelledby="tabLogin">
+          <label>Имэйл хаяг
+            <input name="email" type="email" autocomplete="username" required>
+          </label>
+          <label>Нууц үг
+            <input name="password" type="password" autocomplete="current-password" required>
+          </label>
+          <button type="submit" class="primary">Нэвтрэх</button>
+        </form>
+
+        <form id="registerForm" class="auth-form" role="tabpanel" aria-labelledby="tabRegister" hidden>
+          <div class="field-row">
+            <label>Овог
+              <input name="lastName" type="text" autocomplete="family-name" maxlength="60" required>
+            </label>
+            <label>Нэр
+              <input name="firstName" type="text" autocomplete="given-name" maxlength="60" required>
+            </label>
+          </div>
+          <label>Имэйл хаяг
+            <input name="email" type="email" autocomplete="email" required>
+          </label>
+          <label>Нууц үг <span class="hint">(дор хаяж 6 тэмдэгт)</span>
+            <input name="password" type="password" autocomplete="new-password" minlength="6" required>
+          </label>
+          <button type="submit" class="primary">Бүртгүүлэх</button>
+        </form>
+
+        <div class="divider"><span>эсвэл</span></div>
         <div id="googleButton"></div>
       </div>
       <div id="profilePanel" class="profile" hidden>
@@ -29,12 +61,13 @@
         <div class="profile-info">
           <h2 id="profileName"></h2>
           <p id="profileEmail"></p>
-          <p class="profile-id">Google ID: <span id="profileId"></span></p>
+          <p class="profile-id">Нэвтэрсэн арга: <span id="profileMethod"></span></p>
+          <p class="profile-id">Хэрэглэгчийн ID: <span id="profileId"></span></p>
           <p id="dbStatus" class="profile-id" role="status" aria-live="polite"></p>
         </div>
         <button id="signOutButton" type="button">Гарах</button>
       </div>
-      <p id="authStatus" class="status" role="status" aria-live="polite">Google нэвтрэлтийг ачаалж байна...</p>
+      <p id="authStatus" class="status" role="status" aria-live="polite"></p>
     </section>
 
     <main id="weatherPanel" hidden>
